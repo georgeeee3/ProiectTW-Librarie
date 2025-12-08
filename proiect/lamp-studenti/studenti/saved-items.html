@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produse Favorite - Librarie Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="top">
+
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span>📞 0770 461 545</span>
+                <span>✉️ samatageorge19@gmail.com</span>
+            </div>
+            <div class="user-links">
+                <a href="https://www.facebook.com/void1ku/" target="_blank">FACEBOOK</a>
+                <a href="https://www.instagram.com/georgishkaa/" target="_blank">INSTAGRAM</a>
+                <a href="account.html">ACCOUNT</a>
+                <a href="saved-items.html">SAVED ITEMS</a>
+                <a href="basket.html">BASKET</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container pagina-fara-sidebar">
+
+        <header class="main-header">
+            <div class="main-header-content">
+                <a href="main.html" style="text-decoration: none;">
+                    <img src="https://images.rawpixel.com/image_png_social_landscape/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTEyL3Jhd3BpeGVsb2ZmaWNlOV9yZXRyb19sb2dvX2Ffb3Blbl9ib29rX2JsYWNrX2FuZF93aGl0ZV9ub19zcGxhc180YjJlZGVmOC1lMWQwLTRiNzUtODhhMi1hZWY4N2JiZjlkN2IucG5n.png" alt="Book Haven Logo" class="logo-image" style="width: 70px; height: auto;">
+                </a>
+                <nav class="meniu-navigare">
+                    <ul>
+                        <li><a href="new-in.html">NEW IN</a></li>
+                        <li><a href="pre-order.html">PRE-ORDER</a></li>
+                        <li><a href="fiction.html">FICTION</a></li>
+                        <li><a href="non-fiction.html">NON-FICTION</a></li>
+                        <li><a href="graphic-novels.html">GRAPHIC NOVELS & MANGA</a></li>
+                        <li><a href="childrens.html">CHILDREN'S</a></li>
+                        <li><a href="young-adult.html">YOUNG ADULT</a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <form onsubmit="return false;">
+                        <input type="search" placeholder="Search..." id="searchInput">
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="page-header">
+                <h1>Produse Favorite</h1>
+            </div>
+            
+            <div class="product-grid" id="favorites-items-container">
+                </div>
+        </main>
+
+        <footer>
+            <section class="newsletter-section">
+                <h3>Abonează-te la newsletter!</h3>
+                <form>
+                    <label for="Nume">Nume</label>
+                    <input type="text" id="Nume" name="Nume"><br>
+                    <label for="Email">Email</label>
+                    <input type="email" id="Email" name="Email"><br>
+                    <button type="submit">Trimite</button>
+                </form>
+            </section>
+            
+            <p style="text-align: center; margin-top: 20px;">samatageorge19@gmail.com</p>
+        </footer>
+    </div>
+
+    <a href="#top" class="back-to-top">↑</a>
+    
+    <script src="database.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.getElementById('favorites-items-container');
+            let favorites = JSON.parse(localStorage.getItem('savedFavorites')) || [];
+
+            if (favorites.length === 0) {
+                container.innerHTML = '<p class="empty-page-text">Nu ai niciun produs salvat în favorite.</p>';
+            } else {
+                favorites.forEach(productId => {
+                    const product = products[productId];
+                    if (product) {
+                        const productHTML = `
+                            <div class="product-item">
+                                <a href="product.html?id=${productId}" class="product-link">
+                                    <img src="${product.image}" alt="Coperta ${product.title}">
+                                    <h3>${product.title}</h3>
+                                </a>
+                                <p class="price"><strong>${product.price}</strong></p>
+                                <p class="format">${product.format}</p>
+                                <button class="btn-remove" data-id="${productId}">Șterge</button>
+                            </div>
+                        `;
+                        container.innerHTML += productHTML;
+                    }
+                });
+                
+                addRemoveListeners();
+            }
+        });
+
+        function addRemoveListeners() {
+            document.querySelectorAll('.btn-remove').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productIdToRemove = this.getAttribute('data-id');
+                    removeFromFavorites(productIdToRemove);
+                });
+            });
+        }
+
+        function removeFromFavorites(productId) {
+            let favorites = JSON.parse(localStorage.getItem('savedFavorites')) || [];
+            favorites = favorites.filter(id => id !== productId);
+            localStorage.setItem('savedFavorites', JSON.stringify(favorites));
+            location.reload();
+        }
+    </script>
+</body>
+</html>
