@@ -412,11 +412,11 @@ aside .product-item .book-placeholder {
 
 .book-row .slick-prev,
 .hero-banner .slick-prev {
-    left: -25px;
+    left: -18px;
 }
 .book-row .slick-next,
 .hero-banner .slick-next {
-    right: -25px;
+    right: -18px;
 }
 
 .hero-banner .slick-prev {
