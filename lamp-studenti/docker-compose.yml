@@ -5,7 +5,7 @@ services:
     build: ./studenti               
     container_name: lamp_apache
     volumes:
-      - ./studenti:/var/www/html
+      - ./studenti:/var/www/html    
     ports:
       - "8080:80"
     depends_on:
