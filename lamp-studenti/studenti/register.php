@@ -1,5 +1,4 @@
 <?php
-// === LOGICA PHP DE ÎNREGISTRARE ===
 require 'db.php';
 session_start();
 
@@ -19,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); 
     }
 
-    // Verificăm dacă emailul există deja
     $check = $pdo->prepare("SELECT id FROM utilizatori WHERE email = :email");
     $check->execute(['email' => $email]);
     
@@ -63,13 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* === STILURI NOI PENTRU BUTONUL DE CĂUTARE === */
         .search-trigger {
             display: inline-block;
             width: 200px; 
             padding: 8px 15px;
             border: 1px solid #ccc;
-            border-radius: 20px; /* Rotunjire tip 'pill' */
+            border-radius: 20px; 
             background-color: #fff;
             color: #777; 
             font-size: 14px;
@@ -81,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-color: #000;
         }
 
-        /* Stiluri Live Search Popup */
         .search-overlay { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
         .search-popup { background-color: white; width: 90%; max-width: 600px; margin: 100px auto; padding: 30px; border-radius: 12px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .close-search { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #555; }
@@ -224,7 +220,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="products_api.js.php"></script>
 
     <script>
-        // --- LOGICA SEARCH POPUP ---
         function openSearch() {
             document.getElementById('searchOverlay').style.display = 'block';
             document.getElementById('liveSearchInput').focus();
@@ -264,7 +259,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (foundCount === 0) resultsContainer.innerHTML = '<p style="text-align:center;color:#999;">Niciun rezultat.</p>';
         });
 
-        // --- NEWSLETTER ---
         const newsForm = document.getElementById('newsletterForm');
         if(newsForm) {
             newsForm.addEventListener('submit', function(e) {

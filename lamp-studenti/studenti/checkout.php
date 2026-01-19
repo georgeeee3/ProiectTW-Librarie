@@ -10,33 +10,144 @@ session_start();
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* === STILURI NOI PENTRU BUTONUL DE CĂUTARE === */
-        .search-trigger {
-            display: inline-block;
-            width: 200px; /* Sau cât de lat vrei să fie */
-            padding: 8px 15px;
-            border: 1px solid #ccc;
-            border-radius: 20px; /* Rotunjire tip 'pill' */
-            background-color: #fff;
-            color: #777; /* Culoare text gri, ca un placeholder */
+        /* Stiluri Checkout Form */
+        .checkout-container {
+            max-width: 700px;
+            margin: 30px auto;
+            font-family: sans-serif;
+        }
+        
+        .checkout-section {
+            background-color: #fcf8f2;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        .checkout-section h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.3rem;
+            font-weight: normal;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
             font-size: 14px;
-            cursor: pointer;
-            text-align: left;
+            color: #333;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-size: 14px;
+            color: #333;
             transition: border-color 0.3s;
         }
-        .search-trigger:hover {
-            border-color: #000;
+        
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d92323;
+            box-shadow: 0 0 5px rgba(217, 35, 35, 0.2);
         }
-
-        /* Stiluri Live Search Popup */
-        .search-overlay { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
-        .search-popup { background-color: white; width: 90%; max-width: 600px; margin: 100px auto; padding: 30px; border-radius: 12px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .close-search { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #555; }
-        .search-popup input { width: 100%; padding: 15px; font-size: 18px; border: 2px solid #eee; border-radius: 8px; outline: none; box-sizing: border-box; }
-        .search-results-list { margin-top: 20px; max-height: 300px; overflow-y: auto; border-top: 1px solid #eee; }
-        .search-result-item { display: flex; align-items: center; gap: 15px; padding: 10px; border-bottom: 1px solid #f5f5f5; text-decoration: none; color: inherit; }
-        .search-result-item:hover { background-color: #f9f9f9; }
-        .search-result-item img { width: 40px; height: 60px; object-fit: cover; border-radius: 4px; }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .radio-option:hover {
+            background-color: #f5f5f5;
+            border-color: #d92323;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #d92323;
+        }
+        
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 14px;
+            flex: 1;
+        }
+        
+        .total-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border: 2px solid #d92323;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .total-price {
+            color: #d92323;
+            font-size: 1.5rem;
+        }
+        
+        .checkout-container button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #0d2c3a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+        
+        .checkout-container button[type="submit"]:hover {
+            background-color: #1a3d4f;
+        }
     </style>
 </head>
 <body id="top">
@@ -55,12 +166,13 @@ session_start();
                     <span style="font-weight: bold; margin-right: 15px; text-transform: uppercase;">
                         SALUT, <?php echo htmlspecialchars($_SESSION['prenume']); ?>!
                     </span>
-                    <a href="logout.php" style="color: #d92323; font-weight: bold;">LOGOUT</a>
+                    <a href="logout.php">LOGOUT</a>
                 <?php else: ?>
                     <a href="account.php">ACCOUNT</a>
                 <?php endif; ?>
 
-                <a href="saved-items.php">SAVED ITEMS</a> <a href="basket.php">BASKET</a>
+                <a href="saved-items.php">SAVED ITEMS</a>
+                <a href="basket.php">BASKET</a>
             </div>
         </div>
     </div>
@@ -197,7 +309,7 @@ session_start();
                     </div>
                 </div>
 
-                <button type="submit" class="cart-checkout-button">Finalizează comanda</button>
+                <button type="submit">Finalizează comanda</button>
             </form>
 
         </main>
@@ -205,12 +317,16 @@ session_start();
         <footer>
             <section class="newsletter-section">
                 <h3>Abonează-te la newsletter!</h3>
-                <form id="newsletterForm">
-                    <label for="Nume">Nume</label>
-                    <input type="text" id="Nume" name="Nume"><br>
-                    <label for="Email">Email</label>
-                    <input type="email" id="Email" name="Email"><br>
-                    <button type="submit">Trimite</button>
+                <form id="newsletterForm" style="max-width: 400px; margin: 20px auto;">
+                    <div style="margin-bottom: 15px;">
+                        <label for="Nume" style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Nume</label>
+                        <input type="text" id="Nume" name="Nume" style="width: 100%; padding: 10px 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="Email" style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Email</label>
+                        <input type="email" id="Email" name="Email" style="width: 100%; padding: 10px 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                    <button type="submit" style="width: 100%; padding: 12px; background-color: #0d2c3a; color: white; border: none; border-radius: 6px; font-weight: bold; text-transform: uppercase; cursor: pointer; font-size: 14px;">Trimite</button>
                 </form>
             </section>
             
@@ -239,7 +355,6 @@ session_start();
 
         document.addEventListener("DOMContentLoaded", function() {
             const totalElement = document.getElementById('checkout-total-price');
-            // Citim coșul corect (listă de obiecte {id, qty})
             let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
             let totalPrice = 0;
 
@@ -248,13 +363,12 @@ session_start();
                     const product = products[item.id];
                     if (product) {
                         const price = parsePrice(product.price);
-                        totalPrice += price * item.qty; // Înmulțim cu cantitatea
+                        totalPrice += price * item.qty;
                     }
                 });
                 totalElement.textContent = totalPrice.toFixed(2).replace('.', ',') + ' lei';
             }
 
-            // Newsletter
             const newsForm = document.getElementById('newsletterForm');
             if(newsForm) {
                 newsForm.addEventListener('submit', function(e) {
@@ -265,7 +379,6 @@ session_start();
             }
         });
 
-        // --- LOGICA SEARCH POPUP ---
         function openSearch() {
             document.getElementById('searchOverlay').style.display = 'block';
             document.getElementById('liveSearchInput').focus();
