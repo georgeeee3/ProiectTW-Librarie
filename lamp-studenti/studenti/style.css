@@ -1,0 +1,297 @@
+/* 
+   1. SETĂRI GENERALE & RESET
+    */
+body {
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+    color: #333;
+    background-color: #fff;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+img, .book-placeholder {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 
+   2. TOP BAR (Bara de sus)
+    */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    background-color: #fff;
+}
+
+.top-bar .contact-info span { 
+    margin-right: 15px; 
+}
+
+.top-bar .user-links a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: inherit;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+}
+
+/* Link Logout Roșu */
+.top-bar .user-links a[href="logout.php"] {
+    color: #d92323;
+    font-weight: bold;
+}
+
+/* 
+   3. LAYOUT (Grid System)
+    */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    grid-template-areas:
+        "header header header"
+        "main   main   aside"
+        "footer footer footer";
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.grid-container.pagina-fara-sidebar {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+}
+
+.main-header { 
+    grid-area: header; 
+    padding: 20px 0; 
+    border-bottom: 1px solid #eee; 
+}
+
+main { 
+    grid-area: main; 
+    min-height: 40vh; 
+}
+
+aside { 
+    grid-area: aside; 
+    background-color: #f9f9f9; 
+    padding: 20px; 
+    border: 1px solid #eee; 
+    box-sizing: border-box;
+    /* IMPORTANT PENTRU SLIDER: */
+    overflow: visible; 
+}
+
+footer { 
+    grid-area: footer; 
+    padding: 30px 20px; 
+    text-align: left; 
+    border-top: 1px solid #eee; 
+    margin-top: 30px; 
+    font-size: 14px; 
+}
+
+/* 
+   4. HEADER & NAVIGARE
+    */
+.main-header-content { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.logo-image { 
+    height: auto; 
+    width: 70px; 
+    object-fit: contain; 
+    display: block; 
+}
+
+.meniu-navigare { padding-bottom: 0; }
+.meniu-navigare ul { list-style-type: none; display: flex; margin: 0; padding: 0; }
+.meniu-navigare li { margin: 0 10px; }
+.meniu-navigare a { 
+    text-decoration: none; 
+    color: black; 
+    text-transform: uppercase; 
+    font-family: serif; 
+    font-size: 14px; 
+}
+
+/* 
+   5. SEARCH BAR (FIXAT - FORTAT CU !IMPORTANT)
+    */
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+/* Aici am pus !important ca să fiu sigur că apare chenarul */
+.search-trigger {
+    display: inline-block !important;
+    width: 200px !important;
+    padding: 8px 15px !important;
+    border: 1px solid #ccc !important; /* Chenar gri OBLIGATORIU */
+    border-radius: 20px !important;    /* Rotunjire OBLIGATORIE */
+    background-color: #fff !important;
+    color: #777 !important;
+    font-size: 14px !important;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.3s;
+    box-sizing: border-box !important;
+    font-family: sans-serif;
+}
+
+.search-trigger:hover {
+    border-color: #000 !important;
+}
+
+/* POPUP SEARCH */
+.search-overlay { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+.search-popup { background-color: white; width: 90%; max-width: 600px; margin: 100px auto; padding: 30px; border-radius: 12px; position: relative; font-family: sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.close-search { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #555; }
+.search-popup input { width: 100%; padding: 15px; font-size: 18px; border: 2px solid #eee; border-radius: 8px; outline: none; box-sizing: border-box; }
+.search-results-list { margin-top: 20px; max-height: 300px; overflow-y: auto; border-top: 1px solid #eee; }
+.search-result-item { display: flex; align-items: center; gap: 15px; padding: 10px; border-bottom: 1px solid #f5f5f5; text-decoration: none; color: inherit; }
+.search-result-item:hover { background-color: #f9f9f9; }
+.search-result-item img { width: 40px; height: 60px; object-fit: cover; border-radius: 4px; }
+
+/* 
+   6. ELEMENTE PRODUS (Grid & General)
+    */
+.product-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+
+.product-item {
+    width: 150px; 
+    font-family: sans-serif; 
+    font-size: 14px;
+    text-align: left;
+    margin: 0 10px;
+}
+.product-item img { width: 150px; height: 220px; object-fit: cover; margin-bottom: 10px; }
+.product-item h3 { font-size: 15px; margin: 0 0 5px 0; font-weight: bold; color: #000; }
+.product-item .price { margin: 5px 0; color: #555; font-size: 13px; }
+.product-item .price strong { color: #d92323; font-weight: bold; font-size: 14px; }
+.product-item .format { margin: 5px 0; font-size: 13px; color: #777; }
+.product-item a.product-link { text-decoration: none; color: inherit; }
+.product-item a.product-link:hover h3 { text-decoration: underline; }
+
+/* 
+   7. HERO BANNER
+    */
+.hero-banner { background-color: #d92323; padding: 40px 20px; display: flex; align-items: center; color: white; }
+.hero-banner .hero-text { margin-right: 30px; text-transform: uppercase; font-size: 24px; line-height: 1; }
+.hero-banner .book-slider { width: 80%; }
+.hero-banner .product-item h3, .hero-banner .product-item .price strong, .hero-banner .product-item .format { color: #f0f0f0; }
+
+/* 
+   8. SIDEBAR & FIX SLIDER YOUNG ADULT
+    */
+aside h3 { font-family: 'Times New Roman', Times, serif; font-weight: normal; font-size: 1.5rem; }
+aside ul { list-style-type: disc; padding-left: 20px; font-family: sans-serif; }
+aside li { margin-bottom: 8px; }
+aside a { text-decoration: none; color: black; font-size: 1rem; line-height: 1.5; }
+aside a:hover { text-decoration: underline; }
+
+/* FIX PENTRU SLIDER - PROMOTIA SAPTAMANII */
+.aside-slider .product-item {
+    text-align: center;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.aside-slider .product-item img {
+    height: 220px;
+    width: 150px;
+    object-fit: cover;
+    margin: 0 auto 10px auto;
+    display: block;
+}
+.aside-slider .slick-slide {
+    height: auto;
+}
+.aside-slider .slick-list {
+    padding-bottom: 20px !important;
+}
+/* Poziționare săgeți */
+.aside-slider .slick-prev, .aside-slider .slick-next { z-index: 10; top: 40%; }
+.aside-slider .slick-prev:before, .aside-slider .slick-next:before { color: #333; font-size: 24px; opacity: 0.8; }
+
+/* 
+   9. DETALII PRODUS (Product Page)
+    */
+.product-detail-container { display: flex; gap: 40px; font-family: sans-serif; max-width: 1000px; margin: 40px auto; }
+.product-detail-image { flex: 1 1 40%; }
+.product-detail-image img { width: 100%; border: 1px solid #eee; }
+.product-detail-info { flex: 1 1 60%; display: flex; flex-direction: column; }
+.product-detail-info h1 { font-family: 'Times New Roman', Times, serif; font-size: 2.5rem; font-weight: normal; margin-top: 0; margin-bottom: 10px; }
+.product-detail-info .author { font-size: 1.2rem; color: #333; margin: 0 0 20px 0; }
+.product-detail-info .description { font-size: 1rem; line-height: 1.6; color: #555; }
+.product-actions { margin-top: auto; padding-top: 20px; border-top: 1px solid #eee; }
+.product-actions .sale-price { font-size: 2rem; font-weight: bold; color: #d92323; }
+
+/* BUTOANE */
+.button-block { display: flex; justify-content: flex-start; gap: 10px; margin-top: 20px; }
+.button-block button { padding: 12px 20px; font-size: 1rem; font-weight: bold; border: 2px solid #333; cursor: pointer; text-transform: uppercase; transition: all 0.3s ease; }
+.btn-add-to-cart { background-color: #333; color: white; }
+.btn-add-to-cart:hover { background-color: #555; }
+.btn-add-to-favorites { background-color: white; color: #333; }
+.btn-add-to-favorites:hover { background-color: #f9f9f9; }
+.btn-success { background-color: #28a745 !important; color: white !important; border-color: #28a745 !important; }
+.btn-warning { background-color: #ffc107 !important; color: #212529 !important; border-color: #ffc107 !important; }
+.btn-remove { background-color: #dc3545; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold; text-transform: uppercase; font-size: 13px; margin-top: 10px; }
+
+/* 
+   10. COȘ CUMPĂRĂTURI (Basket)
+    */
+.cart-container { width: 100%; max-width: 900px; margin: 20px auto; font-family: sans-serif; }
+.cart-item { display: flex; align-items: center; gap: 20px; padding: 20px; border-bottom: 1px solid #eee; background-color: #fcf8f2; border-radius: 8px; margin-bottom: 10px; }
+.cart-item-image img { width: 80px; height: 120px; object-fit: cover; border-radius: 4px; }
+.cart-item-details { flex-grow: 1; }
+.cart-item-details h3 { font-size: 1.2rem; margin: 0 0 5px 0; }
+.cart-item-details a { text-decoration: none; color: #333; }
+.cart-item-quantity input { width: 50px; text-align: center; padding: 5px; border: 1px solid #ccc; border-radius: 20px; }
+.cart-item-subtotal { font-weight: bold; font-size: 1.2rem; color: #333; text-align: right; min-width: 100px; }
+.btn-remove-simple { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #dc3545; padding: 5px; }
+.cart-summary { background-color: #fcf8f2; border: 1px solid #eee; padding: 20px 30px; margin-top: 30px; border-radius: 8px; text-align: right; }
+.cart-summary .total-price { font-size: 1.8rem; color: #d92323; font-weight: bold; margin-left: 10px; }
+.cart-checkout-button { display: inline-block; padding: 15px 30px; background-color: #0d2c3a; color: white; text-decoration: none; font-weight: bold; border-radius: 20px; margin-top: 20px; }
+
+/* 
+   11. DIVERSE (Login, Newsletter, Responsive)
+   */
+.login-container { max-width: 400px; margin: 40px auto; padding: 30px; border: 1px solid #eee; background-color: #fcf8f2; text-align: left; font-family: sans-serif; }
+.login-container input { width: 100%; padding: 10px 15px; border: 1px solid #ccc; border-radius: 20px; box-sizing: border-box; margin-bottom: 20px; }
+.login-container .login-button { width: 100%; padding: 12px; background-color: #333; color: white; border: none; cursor: pointer; border-radius: 20px; font-weight: bold; text-transform: uppercase; }
+
+.newsletter-section { background-color: #fcf8f2; padding: 50px 20px; text-align: center; margin-bottom: 20px; }
+.back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; z-index: 1000; }
+.page-header { text-align: center; margin: 40px 0; }
+.page-header h1 { font-family: serif; font-weight: normal; font-size: 36px; text-transform: uppercase; }
+
+@media (max-width: 900px) {
+    .grid-container { grid-template-columns: 1fr; grid-template-areas: "header" "main" "aside" "footer"; width: 100%; margin: 0; gap: 10px; }
+    .grid-container.pagina-fara-sidebar { grid-template-areas: "header" "main" "footer"; }
+    .main-header-content, .meniu-navigare ul { flex-direction: column; gap: 10px; }
+    .product-detail-container { flex-direction: column; }
+    .cart-item { flex-direction: column; align-items: flex-start; }
+    .cart-item-image { width: 100%; text-align: center; }
+    .cart-item-image img { width: 150px; }
+    .cart-item-subtotal, .cart-item-remove { text-align: left; width: 100%; }
+}
